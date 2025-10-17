@@ -46,8 +46,13 @@ app.use(helmet({
 // CORS configuration
 const corsOptions = {
   origin: function (origin, callback) {
+    // Parse ALLOWED_ORIGINS from environment variable
+    const allowedOriginsEnv = process.env.ALLOWED_ORIGINS ? 
+      process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim()) : [];
+    
     const allowedOrigins = [
       process.env.FRONTEND_URL || 'http://localhost:5173',
+      ...allowedOriginsEnv,
       'https://www.tuphim.online',
       'https://tuphim.online',
       'http://localhost:3000',
@@ -83,6 +88,8 @@ const corsOptions = {
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
+      console.log('CORS blocked origin:', origin);
+      console.log('Allowed origins:', allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },
