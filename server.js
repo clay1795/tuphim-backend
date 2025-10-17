@@ -60,6 +60,11 @@ const corsOptions = {
     // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
     
+    // Allow file:// protocol for local testing
+    if (origin && origin.startsWith('file://')) {
+      return callback(null, true);
+    }
+    
     // Allow VS Code Port Forwarding domains and Dev Tunnels
     if (origin && (
       origin.includes('.ngrok.io') ||
