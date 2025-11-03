@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('dotenv').config({ path: './env_new' });
+require('dotenv').config();
 
 const movieSchema = new mongoose.Schema({
   _id: String,

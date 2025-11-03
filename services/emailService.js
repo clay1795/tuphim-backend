@@ -1,15 +1,14 @@
 const nodemailer = require('nodemailer');
 const logger = require('./logger');
-const emailConfig = require('../email-config');
 
 // Email configuration
 const transporterConfig = {
-  host: process.env.EMAIL_HOST || emailConfig.EMAIL_HOST,
-  port: process.env.EMAIL_PORT || emailConfig.EMAIL_PORT,
+  host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+  port: process.env.EMAIL_PORT || 587,
   secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.EMAIL_USER || emailConfig.EMAIL_USER,
-    pass: process.env.EMAIL_PASS || emailConfig.EMAIL_PASS
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
   }
 };
 
@@ -28,7 +27,7 @@ transporter.verify((error, success) => {
 // Send password reset email
 const sendPasswordResetEmail = async (email, resetToken) => {
   try {
-    const resetUrl = `${process.env.FRONTEND_URL || emailConfig.FRONTEND_URL}/reset-password?token=${resetToken}`;
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
     
     const mailOptions = {
       from: `"TupPhim" <${transporterConfig.auth.user}>`,

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const kkphimApi = require('./services/kkphimApi');
 const logger = require('./services/logger');
-require('dotenv').config({ path: './env_new' });
+require('dotenv').config();
 
 // MongoDB Schema for Movies
 const movieSchema = new mongoose.Schema({
